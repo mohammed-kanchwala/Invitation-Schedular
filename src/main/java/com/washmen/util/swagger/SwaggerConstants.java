@@ -13,5 +13,4 @@ public class SwaggerConstants {
     public static final String API_DETAILS = "Api Details";
     public static final String SWAGGER_VERSION = "1.0";
 
-
 }

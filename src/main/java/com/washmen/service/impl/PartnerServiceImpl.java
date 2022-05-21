@@ -47,25 +47,23 @@ public class PartnerServiceImpl implements PartnerService {
     public List<PartnerResponse> fetchPartners(Double requestedDistance) {
         List<Partner> partners = listAll();
         List<PartnerResponse> resultList = new ArrayList<>();
-        partners.forEach(partner -> {
-            partner.getOffices().forEach(office -> {
-                String[] coordinates = office.getCoordinates().split(",");
-                double officeLat = Double.parseDouble(coordinates[0]);
-                double officeLon = Double.parseDouble(coordinates[1]);
-                double calculatedDistance = distance(sourceLat, sourceLon, officeLat, officeLon, Unit.K);
-                if (calculatedDistance < requestedDistance) {
-                    Optional<PartnerResponse> partnerResponse = resultList.stream()
-                            .filter(x -> Objects.equals(x.getOrganization(), partner.getOrganization()))
-                            .findFirst();
-                    OfficeResponse officeResponse = new OfficeResponse(office.getLocation(), office.getAddress());
-                    if (partnerResponse.isPresent()) {
-                        partnerResponse.ifPresent(p -> p.getOffices().add(officeResponse));
-                    } else {
-                        resultList.add(new PartnerResponse(partner.getOrganization(), partner.getWillWorkRemotely(), partner.getWebsite(), Collections.singletonList(officeResponse)));
-                    }
+        partners.forEach(partner -> partner.getOffices().forEach(office -> {
+            String[] coordinates = office.getCoordinates().split(",");
+            double officeLat = Double.parseDouble(coordinates[0]);
+            double officeLon = Double.parseDouble(coordinates[1]);
+            double calculatedDistance = distance(sourceLat, sourceLon, officeLat, officeLon, Unit.K);
+            if (calculatedDistance < requestedDistance) {
+                Optional<PartnerResponse> partnerResponse = resultList.stream()
+                        .filter(x -> Objects.equals(x.getOrganization(), partner.getOrganization()))
+                        .findFirst();
+                OfficeResponse officeResponse = new OfficeResponse(office.getLocation(), office.getAddress());
+                if (partnerResponse.isPresent()) {
+                    partnerResponse.ifPresent(p -> p.getOffices().add(officeResponse));
+                } else {
+                    resultList.add(new PartnerResponse(partner.getOrganization(), partner.getWillWorkRemotely(), partner.getWebsite(), Collections.singletonList(officeResponse)));
                 }
-            });
-        });
+            }
+        }));
 
         resultList.sort(Comparator.comparing(PartnerResponse::getOrganization));
 

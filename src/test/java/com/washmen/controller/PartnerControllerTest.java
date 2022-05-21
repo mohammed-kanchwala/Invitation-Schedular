@@ -78,7 +78,7 @@ public class PartnerControllerTest {
 
     @Test
     @DisplayName("Test Fetching Partners With Invalid or Bad Request Param")
-    public void testFetchPartners_WithInvalidRequestParam() throws Exception {
+    public void testFetchPartners_WithInvalidRequestParam() {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("distances", "0");
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
