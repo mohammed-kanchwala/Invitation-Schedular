@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class PartnerController {
 
     @GetMapping("/search")
     public ResponseEntity<List<PartnerResponse>> fetchPartners(@Valid @RequestParam @Positive
-                                                                   @Min(value = 1L, message = "value of distance must be positive") Double distance) {
+                                                                   @Min(value = 0L, message = "value of distance must be positive") Double distance) {
         log.info("PartnerController:  fetch partners");
         return ResponseEntity.ok(partnerService.fetchPartners(distance));
     }

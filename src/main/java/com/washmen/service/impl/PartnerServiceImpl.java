@@ -58,9 +58,14 @@ public class PartnerServiceImpl implements PartnerService {
                         .findFirst();
                 OfficeResponse officeResponse = new OfficeResponse(office.getLocation(), office.getAddress());
                 if (partnerResponse.isPresent()) {
-                    partnerResponse.ifPresent(p -> p.getOffices().add(officeResponse));
+                    List<OfficeResponse> officeResponses = partnerResponse.get().getOffices();
+                    officeResponses.add(officeResponse);
+                    partnerResponse.get().setOffices(officeResponses);
                 } else {
-                    resultList.add(new PartnerResponse(partner.getOrganization(), partner.getWillWorkRemotely(), partner.getWebsite(), Collections.singletonList(officeResponse)));
+                    List<OfficeResponse> officeResponses = new ArrayList<>();
+                    officeResponses.add(officeResponse);
+                    resultList.add(new PartnerResponse(partner.getOrganization(),
+                            partner.getWillWorkRemotely(), partner.getWebsite(), officeResponses));
                 }
             }
         }));

@@ -6,4 +6,5 @@ public class ApiConstants {
     public static final String PARTNERS = "/partners";
     public static final String SEARCH = "/search";
 
+    public static final String DISTANCE = "distance";
 }

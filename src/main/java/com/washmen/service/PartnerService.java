@@ -3,6 +3,7 @@ package com.washmen.service;
 import com.washmen.entity.Partner;
 import com.washmen.model.PartnerResponse;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PartnerService {

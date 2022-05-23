@@ -17,11 +17,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PartnerControllerTest {
+class PartnerControllerTest {
 
     private final TestRestTemplate restTemplate;
 
@@ -36,7 +37,7 @@ public class PartnerControllerTest {
 
     @Test
     @DisplayName("Test Fetching All Partners")
-    public void testFindAll() throws Exception {
+    void testFindAll() throws Exception {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.PARTNERS));
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -47,10 +48,10 @@ public class PartnerControllerTest {
     }
 
     @Test
-    @DisplayName("Test Fetching Partners With 50.0 km Distance")
-    public void testFetchPartnersWith50kmDistance() throws Exception {
+    @DisplayName("Test Fetching Partners Within 50.0 km Distance")
+    void testFetchPartners_Within50kmDistance() throws Exception {
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("distance", "50.0");
+        queryParams.put(ApiConstants.DISTANCE, "50.0");
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
         Utility.addQueryParametersToBuilder(queryParams, builder);
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
@@ -62,10 +63,10 @@ public class PartnerControllerTest {
     }
 
     @Test
-    @DisplayName("Test Fetching Partners With 0 km Distance")
-    public void testFetchPartners_With0kmDistance() throws Exception {
+    @DisplayName("Test Fetching Partners Within 0 km Distance")
+    void testFetchPartners_Within0kmDistance() throws Exception {
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("distance", "0");
+        queryParams.put(ApiConstants.DISTANCE, "0");
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
         Utility.addQueryParametersToBuilder(queryParams, builder);
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
@@ -77,8 +78,23 @@ public class PartnerControllerTest {
     }
 
     @Test
+    @DisplayName("Test Fetching Partners Within 100.00 km Distance")
+    void testFetchPartners_Within100kmDistance() throws Exception {
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put(ApiConstants.DISTANCE, "100");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
+        Utility.addQueryParametersToBuilder(queryParams, builder);
+        ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        List<Partner> partnerList = Utility.fetchPartnersFromResponse(response.getBody());
+        assertNotNull(partnerList);
+        assertEquals(2, partnerList.size());
+    }
+
+    @Test
     @DisplayName("Test Fetching Partners With Invalid or Bad Request Param")
-    public void testFetchPartners_WithInvalidRequestParam() {
+    void testFetchPartners_WithInvalidRequestParam() {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("distances", "0");
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
@@ -86,4 +102,17 @@ public class PartnerControllerTest {
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
+
+    @Test
+    @DisplayName("Test Fetching Partners Within -5.0 km Distance")
+    void testFetchPartners_WithinNegative5kmDistance() throws Exception {
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put(ApiConstants.DISTANCE, "-5");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
+        Utility.addQueryParametersToBuilder(queryParams, builder);
+        ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(Objects.requireNonNull(response.getBody()).contains("distance must be positive"));
+    }
+
 }
