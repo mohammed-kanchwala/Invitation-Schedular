@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/partners")
 @Slf4j
 @Validated
 public class PartnerController {
@@ -31,7 +31,7 @@ public class PartnerController {
         this.partnerService = partnerService;
     }
 
-    @GetMapping("/partners")
+    @GetMapping("/")
     public ResponseEntity<List<Partner>> listAll() {
         log.info("PartnerController:  list partners");
         return ResponseEntity.ok(partnerService.listAll());

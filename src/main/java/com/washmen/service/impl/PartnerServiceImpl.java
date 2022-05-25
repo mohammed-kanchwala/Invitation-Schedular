@@ -65,7 +65,7 @@ public class PartnerServiceImpl implements PartnerService {
                     List<OfficeResponse> officeResponses = new ArrayList<>();
                     officeResponses.add(officeResponse);
                     resultList.add(new PartnerResponse(partner.getOrganization(),
-                            partner.getWillWorkRemotely(), partner.getWebsite(), officeResponses));
+                            partner.getWillWorkRemotely(),partner.getCustomerLocations(), partner.getWebsite(), officeResponses));
                 }
             }
         }));

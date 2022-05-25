@@ -12,6 +12,7 @@ import java.util.List;
 public class PartnerResponse {
     private String organization;
     private Boolean willWorkRemotely;
+    private String customerLocations;
     private String website;
     private List<OfficeResponse> offices;
 

@@ -11,30 +11,9 @@ function App() {
 
   const [distance, setDistance] = useState("");
   const [partners, setPartners] = useState([]);
-  const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
   useEffect(() => {
-
   });
-
-  // componentDidMount() {
-  //   const esc = encodeURIComponent;
-  //   const url = 'http://localhost:8080/api/search?';
-  //   const params = {
-  //     distance: '',
-  //   };
-  //   // this line takes the params object and builds the query string
-  //   const query = Object.keys(params).map(k => `${esc(k)}=${esc(params[k])}`).join('&')
-  //   fetch(url + query)
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       this.setState({
-  //         partners: json,
-  //         dataIsLoaded: true,
-  //       });
-  //     })
-  // }
-
 
   const getTableBody = (params) => {
     return (
@@ -70,7 +49,7 @@ function App() {
 
   const handleSubmit = () => {
     const esc = encodeURIComponent;
-    const url = 'http://localhost:8080/api/search?';
+    const url = 'http://localhost:8080/api/partners/search?';
     const params = {
       distance: distance,
     };
@@ -89,7 +68,7 @@ function App() {
   return (
     <>
       <div className="container-fluid">
-        <div className="row">
+        <div className="row center">
           <div className="col-4">
             <InputComponent placeHolder="Distance" controlId="form.distance" type="number" name="Distance"
               onChange={handleDistanceChange}
@@ -108,7 +87,6 @@ function App() {
       </div>
     </>
   );
-
 }
 
 export default App;
