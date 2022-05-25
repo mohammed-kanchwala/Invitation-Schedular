@@ -1,12 +1,15 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button'
 
-function ButtonComponent({
-    labelName = '',
+export default function ButtonComponent({
+    label = '',
+    variant = '',
     ...props
 }) {
     return (
-        <Button {...props}>{labelName}</Button>)
+        <Stack spacing={2} direction="row">
+            <Button {...props} variant={variant}>{label}</Button>
+        </Stack>
+    );
 }
-
-export default ButtonComponent

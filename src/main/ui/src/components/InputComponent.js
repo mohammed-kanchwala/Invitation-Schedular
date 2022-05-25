@@ -1,22 +1,29 @@
 import React from 'react'
-import Form from 'react-bootstrap/Form'
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 
-function InputComponent({
-    labelName = '',
-    placeHolder = '',
+export default function InputComponent({
+    label = '',
     type = 'text',
-    className = 'mb-3',
-    controlId = '',
+    variant = 'filled',
     onChange,
-    value = '',
-    name = '',
     ...props
 }) {
     return (
-        <Form.Group className={className} controlId={controlId}>
-            <Form.Label>{labelName}</Form.Label>
-            <Form.Control type={type} placeholder={placeHolder} onChange={onChange} name={name} value={value} />
-        </Form.Group>)
-}
 
-export default InputComponent
+        <TextField
+            id="filled-required"
+            label={label}
+            type={type}
+            onChange={onChange}
+            variant={variant}
+            InputLabelProps={{
+                shrink: true,
+            }}
+            {...props}
+            InputProps={{
+                startAdornment: <InputAdornment position="start">km</InputAdornment>,
+            }}
+        />
+    );
+}
