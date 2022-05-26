@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Utility {
 
-    public static String createURL(int port, String urlEndpoint) {
-        return ApiConstants.HTTP_LOCALHOST + port + ApiConstants.REQUEST_MAPPING_API + urlEndpoint;
+    public static String createURL(int port, String urlEndPoint) {
+        return ApiConstants.HTTP_LOCALHOST + port + ApiConstants.REQUEST_MAPPING_API  + ApiConstants.PARTNERS + urlEndPoint;
     }
 
     public static List<Partner> fetchPartnersFromResponse(String response) throws IOException {

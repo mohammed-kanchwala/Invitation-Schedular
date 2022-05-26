@@ -44,7 +44,6 @@ public class InvitationSchedulerMain {
             }
         };
     }
-
     @Bean
     CommandLineRunner runner(PartnerService partnerService) {
         return args -> {

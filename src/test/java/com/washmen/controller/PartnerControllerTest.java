@@ -38,7 +38,7 @@ class PartnerControllerTest {
     @Test
     @DisplayName("Test Fetching All Partners")
     void testFindAll() throws Exception {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.PARTNERS));
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, "/"));
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -67,6 +67,17 @@ class PartnerControllerTest {
     void testFetchPartners_Within0kmDistance() throws Exception {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put(ApiConstants.DISTANCE, "0");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
+        Utility.addQueryParametersToBuilder(queryParams, builder);
+        ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Test Fetching Partners Within 0.1 km Distance")
+    void testFetchPartners_Within0Point1kmDistance() throws Exception {
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put(ApiConstants.DISTANCE, "0.1");
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
         Utility.addQueryParametersToBuilder(queryParams, builder);
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
@@ -108,6 +119,7 @@ class PartnerControllerTest {
     void testFetchPartners_WithinNegative5kmDistance() throws Exception {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put(ApiConstants.DISTANCE, "-5");
+
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Utility.createURL(port, ApiConstants.SEARCH));
         Utility.addQueryParametersToBuilder(queryParams, builder);
         ResponseEntity<String> response = restTemplate.getForEntity(builder.toUriString(), String.class);
