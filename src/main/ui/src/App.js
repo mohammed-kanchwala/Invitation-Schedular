@@ -34,40 +34,42 @@ function App() {
 
   return (
     <>
-      <div className="container-fluid Background-Image">
-        <form onSubmit={handleSubmit} >
-          <Box
-            sx={{
-              '& .MuiTextField-root': { m: 4, width: '20' },
-            }}
-            autoComplete="off"
-          >
-            <div className="row center">
-              <div className="d-flex justify-content-center" style={{ marginTop: "100px" }}>
-                <InputComponent type="number" label="Distance"
-                  onChange={handleDistanceChange}
-                  value={distance}
-                  required
-                  variant="outlined"
-                />
-                <div className="mt-5">
-                  <ButtonComponent type="submit" label="Search" variant='contained' />
+      <div className="Background-Image" style={{ backgroundColor: "blue" }}>
+        <div className="container-fluid">
+          <form onSubmit={handleSubmit} >
+            <Box
+              sx={{
+                '& .MuiTextField-root': { m: 4, width: '20' },
+              }}
+              autoComplete="off"
+            >
+              <div className="row center">
+                <div className="d-flex justify-content-center" style={{ marginTop: "100px" }}>
+                  <InputComponent type="number" label="Distance"
+                    onChange={handleDistanceChange}
+                    value={distance}
+                    required
+                    variant="filled"
+                  />
+                  <div className="mt-5">
+                    <ButtonComponent type="submit" label="Search" variant='contained' />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Box>
-        </form>
-      </div>
-      <div className="container-fluid">
-        <div className="row center md-12">
-          {partners.length ? (
-            partners.map((partner, index) => {
-              return (
-                <div key={index} className="d-flex justify-content-center" style={{ padding: "5px" }}>
-                  <AccordianComponent partner={partner} />
-                </div>);
-            })
-          ) : null}
+            </Box>
+          </form>
+        </div>
+        <div className="container-fluid">
+          <div className="row center md-12">
+            {partners.length ? (
+              partners.map((partner, index) => {
+                return (
+                  <div key={index} className="d-flex justify-content-center" style={{ padding: "5px" }}>
+                    <AccordianComponent partner={partner} />
+                  </div>);
+              })
+            ) : null}
+          </div>
         </div>
       </div>
     </>
