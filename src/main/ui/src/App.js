@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container-fluid Background-Image">
         <form onSubmit={handleSubmit} >
           <Box
             sx={{
