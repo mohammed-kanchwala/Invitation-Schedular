@@ -30,14 +30,15 @@ function App() {
       .then((res) => res.json())
       .then((json) => {
         setPartners(json)
-      }).then(partners.length !== 0 ? setIsDataAvailable(false) : setIsDataAvailable(true))
-
+      })
+      .then(partners.length !== 0 ? setIsDataAvailable(false) : setIsDataAvailable(true))
   }
 
   const handleDistanceChange = e => {
     setIsFormInvalid(false);
     setDistance(e.target.value);
   };
+
   return (
     <>
       <div className="Background-Image" style={{ backgroundColor: "blue" }}>
