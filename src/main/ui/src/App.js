@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
+import {API_ENDPOINT, SERVER_URL} from './constants';
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
       setIsFormInvalid(true);
     }
     const esc = encodeURIComponent;
-    const url = 'http://localhost:8080/api/partners/search?';
+    const url = SERVER_URL + API_ENDPOINT + 'search?';
     const params = {
       distance: distance,
     };
