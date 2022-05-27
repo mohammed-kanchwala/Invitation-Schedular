@@ -35,6 +35,7 @@ function App() {
   }
 
   const handleDistanceChange = e => {
+    setIsFormInvalid(false);
     setDistance(e.target.value);
   };
   return (
